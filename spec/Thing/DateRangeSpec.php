@@ -72,4 +72,15 @@ class DateRangeSpec extends ObjectBehavior
         $encapsulates = DateRange::fromDateTime(new \DateTime('2014-06-10'), new \DateTime('2014-08-03'));
         $this->overlapsWithRange($encapsulates)->shouldBe(true);
     }
+
+    function it_tells_you_how_many_days_are_in_a_week()
+    {
+        $this->getDayCount()->shouldReturn(7);
+    }
+
+    function it_tells_you_how_many_days_are_in_a_day()
+    {
+        $this->beConstructedThrough('fromDateTime', [new \DateTime('2014-07-01'), new \DateTime('2014-07-01')]);
+        $this->getDayCount()->shouldReturn(1);
+    }
 }

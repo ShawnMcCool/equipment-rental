@@ -40,6 +40,15 @@ class RateSpec extends ObjectBehavior
         $this->appliesToDateRange($startsAfterRange)->shouldBe(false);
     }
 
+    function it_applies_to_all_ranges_when_a_range_is_not_defined()
+    {
+        $price = Price::fromString(70, Currency::fromString('EUR'));
+        $this->beConstructedWith(null, $price, 1);
+
+        $startsAfterRange = DateRange::fromDateTime(new \DateTime('2014-07-08'), new \DateTime('2014-08-02'));
+        $this->appliesToDateRange($startsAfterRange)->shouldBe(true);
+    }
+
     function it_returns_the_price()
     {
         $this->getPrice()->shouldHaveType('Thing\Price');
@@ -49,5 +58,10 @@ class RateSpec extends ObjectBehavior
     function it_returns_unit_price()
     {
         $this->getUnitPrice()->getValue()->shouldBe(70);
+    }
+
+    function it_returns_unit_days()
+    {
+        $this->getUnitDays()->shouldBe(7);
     }
 }

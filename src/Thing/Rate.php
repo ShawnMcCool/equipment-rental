@@ -25,7 +25,15 @@ class Rate
      */
     public function appliesToDateRange(DateRange $range)
     {
+        if ( ! $this->dateRange) {
+            return true;
+        }
         return $this->dateRange->overlapsWithRange($range);
+    }
+
+    public function getUnitDays()
+    {
+        return $this->dateRange->getDayCount();
     }
 
     /**

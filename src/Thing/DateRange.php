@@ -66,4 +66,9 @@ final class DateRange
     {
         return $other->isWithinRange($this->startDate) || $other->isWithinRange($this->endDate);
     }
+
+    public function getDayCount()
+    {
+        return $this->startDate->diff($this->endDate)->format("%a") + 1;
+    }
 }
