@@ -1,5 +1,5 @@
 {
-    "name": "mccool/product-rate-spec",
+    "name": "mccool/equipment-rental",
     "description": "Just some exercise",
     "authors": [
         {
@@ -13,6 +13,8 @@
     "config": {
         "bin-dir": "bin"
     },
-    "autoload": {"psr-0": {"Thing": "src"}},
+    "autoload": {"psr-4": {
+        "Rental\\": "src/"
+    }},
     "minimum-stability": "dev"
 }

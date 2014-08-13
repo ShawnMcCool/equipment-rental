@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Thing;
+namespace spec\Rental;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Thing\DateRange;
+use Rental\RentalPeriod;
 
-class DateRangeSpec extends ObjectBehavior
+class RentalPeriodSpec extends ObjectBehavior
 {
     function let()
     {
@@ -15,7 +15,7 @@ class DateRangeSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Thing\DateRange');
+        $this->shouldHaveType('Rental\RentalPeriod');
     }
 
     function it_returns_the_start_date()
@@ -30,13 +30,13 @@ class DateRangeSpec extends ObjectBehavior
 
     function it_tests_for_equality_between_date_ranges()
     {
-        $sameDateRange = DateRange::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
+        $sameDateRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
         $this->equals($sameDateRange)->shouldBe(true);
     }
 
     function it_tests_for_equality_between_different_timezones()
     {
-        $diffDateRange = DateRange::fromDateTime(new \DateTime('2014-07-01', new \DateTimeZone('Europe/London')), new \DateTime('2014-07-07'));
+        $diffDateRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-01', new \DateTimeZone('Europe/London')), new \DateTime('2014-07-07'));
         $this->equals($diffDateRange)->shouldBe(false);
     }
 
@@ -54,22 +54,22 @@ class DateRangeSpec extends ObjectBehavior
 
     function it_checks_if_it_overlaps_with_a_range()
     {
-        $internal = DateRange::fromDateTime(new \DateTime('2014-07-03'), new \DateTime('2014-07-05'));
+        $internal = RentalPeriod::fromDateTime(new \DateTime('2014-07-03'), new \DateTime('2014-07-05'));
         $this->overlapsWithRange($internal)->shouldBe(true);
 
-        $before = DateRange::fromDateTime(new \DateTime('2014-06-03'), new \DateTime('2014-06-30'));
+        $before = RentalPeriod::fromDateTime(new \DateTime('2014-06-03'), new \DateTime('2014-06-30'));
         $this->overlapsWithRange($before)->shouldBe(false);
 
-        $after = DateRange::fromDateTime(new \DateTime('2014-07-10'), new \DateTime('2014-07-30'));
+        $after = RentalPeriod::fromDateTime(new \DateTime('2014-07-10'), new \DateTime('2014-07-30'));
         $this->overlapsWithRange($after)->shouldBe(false);
 
-        $startDuring = DateRange::fromDateTime(new \DateTime('2014-07-04'), new \DateTime('2014-07-30'));
+        $startDuring = RentalPeriod::fromDateTime(new \DateTime('2014-07-04'), new \DateTime('2014-07-30'));
         $this->overlapsWithRange($startDuring)->shouldBe(true);
 
-        $endDuring = DateRange::fromDateTime(new \DateTime('2014-06-10'), new \DateTime('2014-07-03'));
+        $endDuring = RentalPeriod::fromDateTime(new \DateTime('2014-06-10'), new \DateTime('2014-07-03'));
         $this->overlapsWithRange($endDuring)->shouldBe(true);
 
-        $encapsulates = DateRange::fromDateTime(new \DateTime('2014-06-10'), new \DateTime('2014-08-03'));
+        $encapsulates = RentalPeriod::fromDateTime(new \DateTime('2014-06-10'), new \DateTime('2014-08-03'));
         $this->overlapsWithRange($encapsulates)->shouldBe(true);
     }
 

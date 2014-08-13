@@ -1,9 +1,9 @@
-<?php namespace Thing; 
+<?php namespace Rental;
 
 class Rate
 {
     /**
-     * @var DateRange
+     * @var RentalPeriod
      */
     private $dateRange;
     /**
@@ -12,7 +12,7 @@ class Rate
     private $price;
     private $unitInDays;
 
-    public function __construct(DateRange $dateRange = null, Price $price, $unitInDays)
+    public function __construct(RentalPeriod $dateRange = null, Price $price, $unitInDays)
     {
         $this->dateRange = $dateRange;
         $this->price = $price;
@@ -20,10 +20,10 @@ class Rate
     }
 
     /**
-     * @param DateRange $range
+     * @param RentalPeriod $range
      * @return bool
      */
-    public function appliesToDateRange(DateRange $range)
+    public function appliesToDateRange(RentalPeriod $range)
     {
         if ( ! $this->dateRange) {
             return true;
@@ -33,7 +33,7 @@ class Rate
 
     public function getUnitDays()
     {
-        return $this->dateRange->getDayCount();
+        return $this->dateRange ? $this->dateRange->getDayCount() : 1;
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Thing;
+namespace Rental;
 
-final class DateRange
+final class RentalPeriod
 {
     /**
      * @var \DateTime
@@ -33,7 +33,7 @@ final class DateRange
         return $this->endDate;
     }
 
-    public function equals(DateRange $other)
+    public function equals(RentalPeriod $other)
     {
         return $this->startDate->getTimestamp() == $other->startDate->getTimestamp() &&
             $this->endDate->getTimestamp() == $other->endDate->getTimestamp() &&
@@ -47,17 +47,17 @@ final class DateRange
             $date->getTimestamp() <= $this->endDate->getTimestamp();
     }
 
-    public function overlapsWithRange(DateRange $other)
+    public function overlapsWithRange(RentalPeriod $other)
     {
         return $this->otherRangeBoundariesFallWithinThisRange($other) ||
         $this->theseRangeBoundariesFallWithinOtherRange($other);
     }
 
     /**
-     * @param DateRange $other
+     * @param RentalPeriod $other
      * @return bool
      */
-    private function otherRangeBoundariesFallWithinThisRange(DateRange $other)
+    private function otherRangeBoundariesFallWithinThisRange(RentalPeriod $other)
     {
         return $this->isWithinRange($other->getStartDate()) || $this->isWithinRange($other->getEndDate());
     }

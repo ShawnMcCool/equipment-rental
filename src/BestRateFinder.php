@@ -1,21 +1,21 @@
 <?php
 
-namespace Thing;
+namespace Rental;
 
 class BestRateFinder
 {
-    public function findForRange(Equipment $equipment, DateRange $range)
+    public function findForRange(Equipment $equipment, RentalPeriod $range)
     {
-        $rates = [];
+        $rates = new RateGroup;
         $days = $range->getDayCount();
 
         while ($days > 0) {
             $rate = $this->getBestRateFor($equipment, $range, $days);
             $days -= $rate->getUnitDays();
-            $rates[] = $rates;
+            $rates->add($rate);
         }
 
-        // need rate stack concept
+        return $rates;
     }
 
     private function getBestRateFor($equipment, $range)

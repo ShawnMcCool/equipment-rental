@@ -1,6 +1,6 @@
 <?php
 
-namespace Thing;
+namespace Rental;
 
 final class Price
 {
@@ -34,5 +34,19 @@ final class Price
     {
         return $this->value == $other->value &&
             $this->currency->equals($other->currency);
+    }
+
+    public function add(Price $other)
+    {
+        if ( ! $this->getCurrency()->equals($other->getCurrency())) {
+            throw new \InvalidArgumentException;
+        }
+
+        return Price::fromString($other->getValue() + $this->value, $this->getCurrency());
+    }
+
+    public function times($multiplier)
+    {
+        return Price::fromString($this->value * $multiplier, $this->getCurrency());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thing;
+namespace Rental;
 
 final class Currency
 {

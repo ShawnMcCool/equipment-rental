@@ -1,13 +1,13 @@
 <?php
 
-namespace spec\Thing;
+namespace spec\Rental;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Thing\Currency;
-use Thing\DateRange;
-use Thing\Price;
-use Thing\Rate;
+use Rental\Currency;
+use Rental\RentalPeriod;
+use Rental\Price;
+use Rental\Rate;
 
 class EquipmentSpec extends ObjectBehavior
 {
@@ -19,7 +19,7 @@ class EquipmentSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Thing\Equipment');
+        $this->shouldHaveType('Rental\Equipment');
     }
 
     function it_has_a_name()
@@ -29,7 +29,7 @@ class EquipmentSpec extends ObjectBehavior
 
     function it_has_a_base_rate()
     {
-        $this->getBaseRate()->shouldHaveType('Thing\Rate');
+        $this->getBaseRate()->shouldHaveType('Rental\Rate');
         $this->getBaseRate()->getPrice()->getValue()->shouldBe(100);
     }
 
@@ -39,7 +39,7 @@ class EquipmentSpec extends ObjectBehavior
         $this->addRate(null, $price, 1);
         $this->getRates()->shouldHaveCount(1);
 
-        $dateRange = DateRange::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
+        $dateRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
         $this->addRate($dateRange, $price, 1);
         $this->getRates()->shouldHaveCount(2);
     }

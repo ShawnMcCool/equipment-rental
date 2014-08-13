@@ -1,6 +1,6 @@
 <?php
 
-namespace Thing;
+namespace Rental;
 
 class Equipment
 {
@@ -27,7 +27,7 @@ class Equipment
         return $this->baseRate;
     }
 
-    public function addRate(DateRange $dateRange = null, Price $price, $unitInDays)
+    public function addRate(RentalPeriod $dateRange = null, Price $price, $unitInDays)
     {
         $this->rates[] = new Rate($dateRange, $price, $unitInDays);
     }

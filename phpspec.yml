@@ -1,0 +1,7 @@
+---
+suites:
+  rental_suite:
+    namespace: Rental
+    psr4_prefix: Rental
+
+formatter.name: pretty

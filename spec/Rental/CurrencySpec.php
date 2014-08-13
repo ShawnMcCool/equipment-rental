@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Thing;
+namespace spec\Rental;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Thing\Currency;
+use Rental\Currency;
 
 class CurrencySpec extends ObjectBehavior
 {
@@ -15,7 +15,7 @@ class CurrencySpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Thing\Currency');
+        $this->shouldHaveType('Rental\Currency');
     }
 
     function it_stores_a_currency()
