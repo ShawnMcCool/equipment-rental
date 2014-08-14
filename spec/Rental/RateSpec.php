@@ -25,19 +25,19 @@ class RateSpec extends ObjectBehavior
     function it_tests_whether_or_not_it_applies_to_a_date_range()
     {
         $endsInsideOfRange = RentalPeriod::fromDateTime(new \DateTime('2014-06-01'), new \DateTime('2014-07-02'));
-        $this->appliesToDateRange($endsInsideOfRange)->shouldBe(true);
+        $this->overlapsWithPeriod($endsInsideOfRange)->shouldBe(true);
 
         $startsInsideOfRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-02'), new \DateTime('2014-08-02'));
-        $this->appliesToDateRange($startsInsideOfRange)->shouldBe(true);
+        $this->overlapsWithPeriod($startsInsideOfRange)->shouldBe(true);
 
         $encapsulatesRange = RentalPeriod::fromDateTime(new \DateTime('2014-06-02'), new \DateTime('2014-08-02'));
-        $this->appliesToDateRange($encapsulatesRange)->shouldBe(true);
+        $this->overlapsWithPeriod($encapsulatesRange)->shouldBe(true);
 
         $endsBeforeRange = RentalPeriod::fromDateTime(new \DateTime('2014-06-02'), new \DateTime('2014-06-30'));
-        $this->appliesToDateRange($endsBeforeRange)->shouldBe(false);
+        $this->overlapsWithPeriod($endsBeforeRange)->shouldBe(false);
 
         $startsAfterRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-08'), new \DateTime('2014-08-02'));
-        $this->appliesToDateRange($startsAfterRange)->shouldBe(false);
+        $this->overlapsWithPeriod($startsAfterRange)->shouldBe(false);
     }
 
     function it_applies_to_all_ranges_when_a_range_is_not_defined()
@@ -46,7 +46,7 @@ class RateSpec extends ObjectBehavior
         $this->beConstructedWith(null, $price, 1);
 
         $startsAfterRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-08'), new \DateTime('2014-08-02'));
-        $this->appliesToDateRange($startsAfterRange)->shouldBe(true);
+        $this->overlapsWithPeriod($startsAfterRange)->shouldBe(true);
     }
 
     function it_returns_the_price()
@@ -62,6 +62,6 @@ class RateSpec extends ObjectBehavior
 
     function it_returns_unit_days()
     {
-        $this->getUnitDays()->shouldBe(7);
+        $this->getUnitDays()->shouldBe(1);
     }
 }

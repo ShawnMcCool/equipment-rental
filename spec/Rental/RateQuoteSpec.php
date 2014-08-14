@@ -5,18 +5,32 @@ namespace spec\Rental;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Rental\Currency;
+use Rental\Equipment;
 use Rental\Price;
 use Rental\Rate;
 use Rental\RateQuoteLineItem;
 
 class RateQuoteSpec extends ObjectBehavior
 {
+    function let()
+    {
+        $baseRate = new Rate(null, Price::fromString('12', Currency::fromString('EUR')), 1);
+        $equipment = new Equipment('Wrench', $baseRate);
+
+        $this->beConstructedWith($equipment);
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Rental\RateQuote');
     }
 
-    function it_holds_line_items()
+    function it_references_equipment()
+    {
+        $this->getEquipment()->shouldHaveType('Rental\Equipment');
+    }
+
+    function it_references_line_items()
     {
         $rate = new Rate(null, Price::fromString('12.12', Currency::fromString('EUR')), 1);
 

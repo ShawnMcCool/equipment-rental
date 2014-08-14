@@ -5,6 +5,15 @@ namespace Rental;
 class RateQuote
 {
     private $lineItems = [];
+    /**
+     * @var
+     */
+    private $equipment;
+
+    public function __construct(Equipment $equipment)
+    {
+        $this->equipment = $equipment;
+    }
 
     public function getLineItems()
     {
@@ -32,5 +41,10 @@ class RateQuote
         }
 
         return $subtotal;
+    }
+
+    public function getEquipment()
+    {
+        return $this->equipment;
     }
 }

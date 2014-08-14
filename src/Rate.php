@@ -5,16 +5,16 @@ class Rate
     /**
      * @var RentalPeriod
      */
-    private $dateRange;
+    private $rentalPeriod;
     /**
      * @var Price
      */
     private $price;
     private $unitInDays;
 
-    public function __construct(RentalPeriod $dateRange = null, Price $price, $unitInDays)
+    public function __construct(RentalPeriod $rentalPeriod = null, Price $price, $unitInDays)
     {
-        $this->dateRange = $dateRange;
+        $this->rentalPeriod = $rentalPeriod;
         $this->price = $price;
         $this->unitInDays = $unitInDays;
     }
@@ -23,17 +23,17 @@ class Rate
      * @param RentalPeriod $range
      * @return bool
      */
-    public function appliesToDateRange(RentalPeriod $range)
+    public function overlapsWithPeriod(RentalPeriod $range)
     {
-        if ( ! $this->dateRange) {
+        if ( ! $this->rentalPeriod) {
             return true;
         }
-        return $this->dateRange->overlapsWithRange($range);
+        return $this->rentalPeriod->overlapsWithRange($range);
     }
 
     public function getUnitDays()
     {
-        return $this->dateRange ? $this->dateRange->getDayCount() : 1;
+        return $this->unitInDays;
     }
 
     /**
