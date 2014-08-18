@@ -48,4 +48,9 @@ class Rate
     {
         return $this->price;
     }
+
+    public function getPriceForDays($days)
+    {
+        return $this->getUnitPrice()->times($days);
+    }
 }

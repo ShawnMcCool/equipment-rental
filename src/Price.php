@@ -38,9 +38,7 @@ final class Price
 
     public function add(Price $other)
     {
-        if ( ! $this->getCurrency()->equals($other->getCurrency())) {
-            throw new \InvalidArgumentException;
-        }
+        $this->currencyGuard($other);
 
         return Price::fromString($other->getValue() + $this->value, $this->getCurrency());
     }
@@ -48,5 +46,21 @@ final class Price
     public function times($multiplier)
     {
         return Price::fromString($this->value * $multiplier, $this->getCurrency());
+    }
+
+    public function isLessThan(Price $other)
+    {
+        $this->currencyGuard($other);
+        return $this->value < $other->value;
+    }
+
+    /**
+     * @param Price $other
+     */
+    private function currencyGuard(Price $other)
+    {
+        if ( ! $this->getCurrency()->equals($other->getCurrency())) {
+            throw new \InvalidArgumentException;
+        }
     }
 }

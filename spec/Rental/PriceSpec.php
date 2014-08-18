@@ -56,4 +56,13 @@ class PriceSpec extends ObjectBehavior
         $price->shouldHaveType('Rental\Price');
         $price->getValue()->shouldBe(382.14);
     }
+
+    function it_can_compare_size()
+    {
+        $higherPrice = Price::fromString('130', Currency::fromString('EUR'));
+        $this->isLessThan($higherPrice)->shouldBe(true);
+
+        $lowerPrice = Price::fromString('110', Currency::fromString('EUR'));
+        $this->isLessThan($lowerPrice)->shouldBe(false);
+    }
 }

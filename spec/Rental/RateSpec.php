@@ -64,4 +64,11 @@ class RateSpec extends ObjectBehavior
     {
         $this->getUnitDays()->shouldBe(1);
     }
+
+    function it_gets_price_for_day_count()
+    {
+        $this->getPriceForDays(1)->shouldHaveType('Rental\Price');
+        $this->getPriceForDays(1)->getValue()->shouldBe(70);
+        $this->getPriceForDays(3)->getValue()->shouldBe(210);
+    }
 }

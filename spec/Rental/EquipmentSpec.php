@@ -37,10 +37,10 @@ class EquipmentSpec extends ObjectBehavior
     {
         $price = Price::fromString('12.50', Currency::fromString('EUR'));
         $this->addRate(null, $price, 1);
-        $this->getRates()->shouldHaveCount(1);
+        $this->getRates()->shouldHaveCount(2);
 
         $dateRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
         $this->addRate($dateRange, $price, 1);
-        $this->getRates()->shouldHaveCount(2);
+        $this->getRates()->shouldHaveCount(3);
     }
 }
