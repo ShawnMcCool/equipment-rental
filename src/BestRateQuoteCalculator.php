@@ -14,7 +14,7 @@ class BestRateQuoteCalculator implements RateQuoteCalculator
             $dayCount -= $rate->getUnitDays();
         }
 
-        return $rateQuote;
+        return [$rateQuote];
     }
 
     private function getBestRateForDays($rates, $dayCount)
