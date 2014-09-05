@@ -6,15 +6,8 @@ class SingleRateRateQuoteCalculator implements RateQuoteCalculator
     {
         $quotes = [];
 
-        $equipment = $query->getEquipment();
-        $rentalPeriod = $query->getRentalPeriod();
-
-        /** @var Rate $rate */
-        foreach ($equipment->getRates() as $rate) {
-            if ($rate->overlapsWithPeriod($rentalPeriod)) {
-                $quotes[] = $this->buildQuote($equipment, $rate, $rentalPeriod);
-            }
-        }
+        foreach ($query->getApplicableRates() as $rate)
+            $quotes[] = $this->buildQuote($query->getEquipment(), $rate, $query->getRentalPeriod());
 
         return $quotes;
     }

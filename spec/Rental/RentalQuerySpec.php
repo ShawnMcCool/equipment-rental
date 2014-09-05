@@ -12,13 +12,18 @@ use Rental\RentalPeriod;
 
 class RentalQuerySpec extends ObjectBehavior
 {
+    /**
+     * @var Equipment
+     */
+    private $equipment;
+
     function let()
     {
         $price = Price::fromString('12', Currency::fromString('EUR'));
-        $equipment = new Equipment('Hammer', new Rate(null, $price, 1));
+        $this->equipment = new Equipment('Hammer', new Rate(null, $price, 1));
         $rentalPeriod = RentalPeriod::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
 
-        $this->beConstructedWith($equipment, $rentalPeriod);
+        $this->beConstructedWith($this->equipment, $rentalPeriod);
     }
 
     function it_is_initializable()
@@ -34,5 +39,35 @@ class RentalQuerySpec extends ObjectBehavior
     function it_contains_equipment()
     {
         $this->getEquipment()->shouldHaveType('Rental\Equipment');
+    }
+
+    function it_has_rates()
+    {
+        $this->getRates()->shouldHaveCount(1);
+
+        $this->equipment->addRate(null, Price::fromString('11', Currency::fromString('EUR')), 1);
+        $this->getRates()->shouldHaveCount(2);
+    }
+
+    function it_has_rates_that_overlap_with_rental_period()
+    {
+        $this->getApplicableRates()->shouldHaveCount(1);
+
+        $this->equipment->addRate(null, Price::fromString('11', Currency::fromString('EUR')), 1);
+        $this->getApplicableRates()->shouldHaveCount(2);
+
+        $this->equipment->addRate(RentalPeriod::fromDateTime(new \DateTime('2014-07-05'), new \DateTime('2014-07-10')), Price::fromString('11', Currency::fromString('EUR')), 1);
+        $this->getApplicableRates()->shouldHaveCount(3);
+
+        $this->equipment->addRate(RentalPeriod::fromDateTime(new \DateTime('2014-07-08'), new \DateTime('2014-07-10')), Price::fromString('11', Currency::fromString('EUR')), 1);
+        $this->getApplicableRates()->shouldHaveCount(3);
+
+        $this->equipment->addRate(RentalPeriod::fromDateTime(new \DateTime('2014-06-08'), new \DateTime('2014-06-30')), Price::fromString('11', Currency::fromString('EUR')), 1);
+        $this->getApplicableRates()->shouldHaveCount(3);
+    }
+
+    function it_has_a_count_of_total_days_in_period()
+    {
+        $this->getTotalDayCount();
     }
 }

@@ -26,4 +26,21 @@ class RentalQuery
     {
         return $this->equipment;
     }
+
+    public function getRates()
+    {
+        return $this->equipment->getRates();
+    }
+
+    public function getApplicableRates()
+    {
+        return array_filter($this->getRates(), function($rate) {
+            return $rate->overlapsWithPeriod($this->period);
+        });
+    }
+
+    public function getTotalDayCount()
+    {
+        return $this->period->getDayCount();
+    }
 }
