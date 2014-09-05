@@ -65,10 +65,27 @@ class RateSpec extends ObjectBehavior
         $this->getUnitDays()->shouldBe(1);
     }
 
-    function it_gets_price_for_day_count()
+    function it_gets_price_for_day_count_with_single_day_rates()
     {
+        $dateRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
+        $price = Price::fromString(1, Currency::fromString('EUR'));
+        $this->beConstructedWith($dateRange, $price, 1);
+
+        $this->getPriceForDays(2)->shouldHaveType('Rental\Price');
+        $this->getPriceForDays(2)->getValue()->shouldBe(2);
+        $this->getPriceForDays(3)->getValue()->shouldBe(3);
+    }
+
+    function it_gets_price_for_day_count_with_multi_day_rates()
+    {
+        $dateRange = RentalPeriod::fromDateTime(new \DateTime('2014-07-01'), new \DateTime('2014-07-07'));
+        $price = Price::fromString(70, Currency::fromString('EUR'));
+        $this->beConstructedWith($dateRange, $price, 7);
+
         $this->getPriceForDays(1)->shouldHaveType('Rental\Price');
         $this->getPriceForDays(1)->getValue()->shouldBe(70);
-        $this->getPriceForDays(3)->getValue()->shouldBe(210);
+        $this->getPriceForDays(7)->getValue()->shouldBe(70);
+        $this->getPriceForDays(8)->getValue()->shouldBe(140);
+        $this->getPriceForDays(9)->getValue()->shouldBe(140);
     }
 }

@@ -39,8 +39,7 @@ final class Price
     public function add(Price $other)
     {
         $this->currencyGuard($other);
-
-        return Price::fromString($other->getValue() + $this->value, $this->getCurrency());
+        return Price::fromString($other->value + $this->value, $this->getCurrency());
     }
 
     public function times($multiplier)

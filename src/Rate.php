@@ -51,6 +51,12 @@ class Rate
 
     public function getPriceForDays($days)
     {
-        return $this->getUnitPrice()->times($days);
+        $price = Price::fromString('0', $this->price->getCurrency());
+
+        while ($days > 0) {
+            $days -= $this->unitInDays;
+            $price = $price->add($this->price);
+        }
+        return $price;
     }
 }
